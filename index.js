@@ -51,7 +51,35 @@ app.get("/getAllContacts", (req, res) => {
   res.status(200).send(contacts);
 });
 
-app.patch("/addContact/:contact", (req, res) => {
-  const contact = req.params.contact;
-  contacts.push(contact);
+app.post("/addContact", (req, res) => {
+  console.log(req.body);
+  const contact = JSON.parse(req.body.contact);
+  console.log(contact);
+
+ contacts.push(contact);
+ res.status(200).send(contacts);
+});
+
+app.post("/updateContactByID", (req, res) => {
+  const contact = JSON.parse(req.body.contact);
+  const id = req.body.id;
+  contacts[id] = contact;
+  res.status(200).send(contacts);
+});
+
+app.post("/updateContactByName", (req, res) => {
+  const contact = JSON.parse(req.body.contact);
+
+  let found = false;
+  for (let x=0; x < contacts.length; x++) {
+    if (contacts[x].name === contact.name){
+      contacts[x] = contact;
+      found = true;
+    }
+  }
+  if (!found){
+    res.status(500).send('Not found');
+  } else {
+    res.status(200).send(contacts);
+  }
 });
