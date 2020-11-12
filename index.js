@@ -68,6 +68,17 @@ app.post("/updateContactByID", (req, res) => {
   res.status(200).send(contacts);
 });
 
+app.post("/deleteContactByID", (req, res) => {
+  const contact = req.body;
+  const id = req.body;
+  for (let i = 0; i < contacts.length; i++){
+    if (contacts[i].id === contact.id){
+      contacts.splice(i,1);
+    }
+  }
+  res.status(200).send(contacts);
+});
+
 app.post("/updateContactByName", (req, res) => {
   const contact = req.body;
 
