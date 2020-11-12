@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const port = process.env.PORT || 3200;
 
 const contacts = [{
+  "id": 2345,
   "name": "Carl",
   "address": {
     "street": "Ruby",
@@ -15,6 +16,7 @@ const contacts = [{
   },
   "phone": "6785551212"
 }, {
+  "id": 2346,
   "name": "Taty",
   "address": {
     "street": "Lane",
@@ -24,6 +26,7 @@ const contacts = [{
   },
   "phone": "4703187267"
 }, {
+  "id": 2347,
   "name": "Lila",
   "address": {
     "street": "Rock",
@@ -56,8 +59,12 @@ app.post("/addContact", (req, res) => {
 
 app.post("/updateContactByID", (req, res) => {
   const contact = req.body;
-  const id = req.body.id;
-  contacts[id] = contact;
+  const id = req.body;
+  for (let i = 0; i < contacts.length; i++){
+    if (contacts[i].id === contact.id){
+      contacts[i] = contact;
+    }
+  }
   res.status(200).send(contacts);
 });
 
