@@ -13,8 +13,7 @@ const contacts = [{
     "state": "Ga",
     "zip": "30534"
   },
-  "phone": "6785551212",
-  "isNewContact": false
+  "phone": "6785551212"
 }, {
   "name": "Taty",
   "address": {
@@ -23,8 +22,7 @@ const contacts = [{
     "state": "Ga",
     "zip": "30477"
   },
-  "phone": "4703187267",
-  "isNewContact": false
+  "phone": "4703187267"
 }, {
   "name": "Lila",
   "address": {
@@ -33,8 +31,7 @@ const contacts = [{
     "state": "Ga",
     "zip": "77422"
   },
-  "phone": "7707707700",
-  "isNewContact": false
+  "phone": "7707707700"
 }];
 
 app.use(bodyparser.json());
@@ -52,32 +49,29 @@ app.get("/getAllContacts", (req, res) => {
 });
 
 app.post("/addContact", (req, res) => {
-  console.log(req.body);
-  const contact = JSON.parse(req.body.contact);
-  console.log(contact);
-
- contacts.push(contact);
- res.status(200).send(contacts);
+  const contact = req.body;
+  contacts.push(contact);
+  res.status(200).send(contacts);
 });
 
 app.post("/updateContactByID", (req, res) => {
-  const contact = JSON.parse(req.body.contact);
+  const contact = req.body;
   const id = req.body.id;
   contacts[id] = contact;
   res.status(200).send(contacts);
 });
 
 app.post("/updateContactByName", (req, res) => {
-  const contact = JSON.parse(req.body.contact);
+  const contact = req.body;
 
   let found = false;
-  for (let x=0; x < contacts.length; x++) {
-    if (contacts[x].name === contact.name){
+  for (let x = 0; x < contacts.length; x++) {
+    if (contacts[x].name === contact.name) {
       contacts[x] = contact;
       found = true;
     }
   }
-  if (!found){
+  if (!found) {
     res.status(500).send('Not found');
   } else {
     res.status(200).send(contacts);
